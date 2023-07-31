@@ -68,81 +68,81 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas = pizzaData;
+  // const pizzas = [];
+  const pizzaLength = pizzas.length;
+
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <Pizza
-        name="Pizza Focaccia"
-        ingredients="Bread with italian olive oil and rosemary"
-        price={6}
-        photoName="pizzas/focaccia.jpg"
-        soldOut="false"
-      />
 
-      <Pizza
-        name="Pizza Margherita"
-        ingredients="Tomato and mozarella"
-        price={10}
-        photoName="pizzas/margherita.jpg"
-        soldOut="false"
-      />
-
-      <Pizza
-        name="Pizza Spinaci"
-        ingredients="Tomato, mozarella, spinach, and ricotta cheese"
-        price={12}
-        photoName="pizzas/spinaci.jpg"
-        soldOut="false"
-      />
-
-      <Pizza
-        name="Pizza Funghi"
-        ingredients="Tomato, mozarella, mushrooms, and onion"
-        price={12}
-        photoName="pizzas/funghi.jpg"
-        soldOut="false"
-      />
-
-      <Pizza
-        name="Pizza Salamino"
-        ingredients="Tomato, mozarella, and pepperoni"
-        price={15}
-        photoName="pizzas/salamino.jpg"
-        soldOut="true"
-      />
+      {pizzaLength > 0 ? (
+        <>
+          <p>
+            Discover a slice of happiness at Freadbear's Family Dinner Co.,
+            where we've crafted a pizza paradise that transcends generations.
+            Nestled in the heart of the city, our pizzeria welcomes you with the
+            nostalgic charm of a bygone era blended seamlessly with contemporary
+            comforts.
+          </p>
+          <ul className="pizzas">
+            {pizzaData.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p> - - Maintenace is in progress - - </p>
+      )}
     </main>
   );
 }
 
-function Pizza(props) {
+function Pizza({ pizzaObj }) {
   return (
-    <div className="pizza">
-      <img src={props.photoName}></img>
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.name}</h3>
-        <p>{props.ingredients}</p>
-        <span>{props.price + 3}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price + 3}</span>
       </div>
-    </div>
+    </li>
   );
 }
 
 function Footer() {
   const hour = new Date().getHours();
-  const openHour = 12;
-  const closeHour = 18;
-  const isOpen = openHour <= hour && hour <= closeHour;
-  isOpen === true ? console.log("Open") : console.log("Closed");
-  const time = new Date().toLocaleTimeString();
+  const openHour = 9;
+  const closeHour = 23;
+  const isOpen = openHour <= hour && hour < closeHour;
+  const time = new Date().toLocaleTimeString(undefined, { hour12: false });
   const [getTime, setTime] = useState(time);
   useEffect(() => {
     const intervalID = setInterval(() => {
-      setTime(new Date().toLocaleTimeString());
+      setTime(new Date().toLocaleTimeString(undefined, { hour12: false }));
     }, 1000);
     return () => clearInterval(intervalID);
   });
 
-  return <footer className="footer">{getTime}. We're currently Open!</footer>;
+  return (
+    <footer className="footer">
+      {isOpen ? (
+        <Order getTime={getTime} />
+      ) : (
+        <p>{getTime}. Sorry we're currently closed. Come back later or order</p>
+      )}
+    </footer>
+  );
+}
+
+function Order({ getTime }) {
+  return (
+    <div className="order">
+      <p>{getTime}. We're currently Open! Come visit us or order online.</p>
+      <button className="btn">Order Now</button>
+    </div>
+  );
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
