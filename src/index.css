@@ -39,13 +39,13 @@ body {
 
 .header h1 {
   /* Non-accessible color */
-  color: #edc84b;
+  color: #5f1ea0;
   /* color: #af8602; */
 
   text-transform: uppercase;
   text-align: center;
   font-size: 5.2rem;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 3px;
   position: relative;
   width: 100%;
@@ -140,7 +140,7 @@ body {
   font-size: 1.6rem;
 }
 
-.pizza.sold-out span {
+.pizza.sold-out {
   color: #eb3a3a;
 }
 
@@ -163,11 +163,11 @@ body {
 }
 
 .btn {
-  color: inherit;
+  color: #5f1ea0;
   font-family: inherit;
   border: none;
   font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 550;
   background-color: #edc84b;
   padding: 1.4rem 3.2rem;
   cursor: pointer;

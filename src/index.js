@@ -62,7 +62,7 @@ function Header() {
   const style = {};
   return (
     <header className="header footer">
-      <h1 style={style}>Freadbear's Family Diners Co.</h1>
+      <h1 style={style}>Fredbear's Family Diners Co.</h1>
     </header>
   );
 }
